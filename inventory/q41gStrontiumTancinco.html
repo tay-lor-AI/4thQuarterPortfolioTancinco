@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>1st Graded - Character Rating</title>
+
+    <!-- star rating upload -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="icon"
+        href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMdU7gGJU0vbwxzB2ZaZ8sePAaH7ZriI0ijQ&s">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+        body {
+            font-family: "Outfit", sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        form {
+            position: relative;
+            background: #fff;
+            padding: 25px 50px 35px;
+            border-radius: 25px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        input,
+        label,
+        select,
+        button {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .starRating i {
+            color: #e6e6e6;
+            font-size: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #characterList {
+            margin-top: 20px;
+        }
+
+        #characterList p {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+        <form>
+            <h1>Add a Character</h1>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="version">Planet Origin:</label>
+            <input type="text" id="version" name="version" required>
+
+            <label for="element">Element:</label>
+            <select id="element" name="element" required>
+                <option value="Physical">Physical</option>
+                <option value="Fire">Fire</option>
+                <option value="Ice">Ice</option>
+                <option value="Lightning">Lightning</option>
+                <option value="Wind">Wind</option>
+                <option value="Quantum">Quantum</option>
+                <option value="Imaginary">Imaginary</option>
+            </select>
+
+            <!-- star -->
+            <label for="rating">Rating:</label>
+            <div class="starRating">
+                <i class="fa fa-star" data-rating="1"></i>
+                <i class="fa fa-star" data-rating="2"></i>
+                <i class="fa fa-star" data-rating="3"></i>
+                <i class="fa fa-star" data-rating="4"></i>
+                <i class="fa fa-star" data-rating="5"></i>
+            </div>
+
+            <button type="submit">Add Character</button>
+        </form>
+
+        <div id="characterList"></div>
+    </main>
+
+    <script>
+        let selectedRating = 0;
+
+        const stars = document.querySelectorAll(".starRating i");
+        const form = document.querySelector("form");
+        const characterList = document.getElementById("characterList");
+
+        // starsss (credit to https://www.youtube.com/watch?v=q1xhbc-oKnc)
+        stars.forEach((star, index) => {
+            star.addEventListener("click", function () {
+                selectedRating = index + 1;
+
+                stars.forEach(s => s.style.color = "#e6e6e6");
+
+                for (let i = 0; i < selectedRating; i++) {
+                    stars[i].style.color = "gold";
+                }
+            });
+        });
+
+        //submit the thing
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const planet = document.getElementById("version").value;
+            const element = document.getElementById("element").value;
+
+            if (selectedRating === 0) {
+                alert("Please select a rating!");
+                return;
+            }
+
+            let starDisplay = "";
+            for (let i = 0; i < selectedRating; i++) {
+                starDisplay += "⭐";
+            }
+
+            //output
+            const newCharacter = document.createElement("p");
+            newCharacter.textContent = `${name} ${element} - ${planet} ${starDisplay}`;
+
+            characterList.appendChild(newCharacter);
+
+            //reset
+            form.reset();
+            stars.forEach(s => s.style.color = "#e6e6e6");
+            selectedRating = 0;
+        });
+    </script>
+    </script>
+</body>
+
+</html>
