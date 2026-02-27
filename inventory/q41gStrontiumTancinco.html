@@ -15,13 +15,41 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background: white;
+            color: black;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back:hover {
+            transform: translateY(-3px);
+            background: black;
+            color: white;
+        }
+
         body {
             font-family: "Outfit", sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            min-height: 100vh;
+            margin: 0;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .back {
+            margin-top: 30px;
         }
 
         form {
@@ -34,10 +62,17 @@
 
         input,
         label,
-        select,
+        select {
+            display: block;
+            margin-bottom: 10px;
+        }
+
         button {
             display: block;
             margin-bottom: 10px;
+            background: white;
+            color: black;
+            font-weight: 700;
         }
 
         .starRating i {
@@ -63,6 +98,7 @@
 
 <body>
     <main>
+        <a class="back" href="../index.html">Back to Inventory</a>
         <form>
             <h1>Add a Character</h1>
 
@@ -139,7 +175,7 @@
 
             //output
             const newCharacter = document.createElement("p");
-            newCharacter.textContent = `${name} ${element} - ${planet} ${starDisplay}`;
+            newCharacter.textContent = `${name} [${element}] - ${planet} ${starDisplay}`;
 
             characterList.appendChild(newCharacter);
 
@@ -148,7 +184,6 @@
             stars.forEach(s => s.style.color = "#e6e6e6");
             selectedRating = 0;
         });
-    </script>
     </script>
 </body>
 
