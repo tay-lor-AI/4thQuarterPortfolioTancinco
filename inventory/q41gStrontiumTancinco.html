@@ -136,6 +136,18 @@
     </main>
 
     <script>
+        function displayCharacters() {
+            characterList.innerHTML = ""; // clear old list
+
+            let listy = JSON.parse(localStorage.getItem("characterList")) || [];
+
+            for (let character of listy) {
+                const charElement = document.createElement("p");
+                charElement.textContent =
+                    `${character.name} - ${character.planet} - ${character.element} - ${"⭐".repeat(character.rating)}`;
+                characterList.appendChild(charElement);
+            }
+        }
         let selectedRating = 0;
 
         const stars = document.querySelectorAll(".starRating i");
@@ -173,16 +185,35 @@
                 starDisplay += "⭐";
             }
 
-            //output
-            const newCharacter = document.createElement("p");
-            newCharacter.textContent = `${name} [${element}] - ${planet} ${starDisplay}`;
+            let listy = JSON.parse(localStorage.getItem("characterList")) || [];
 
-            characterList.appendChild(newCharacter);
+            let isItThere = false;
+
+            for (let character of listy) {
+                if (character.name === name) {
+                    character.rating = Math.round((character.rating + selectedRating) / 2);
+                    isItThere = true;
+                    break;
+                }
+            }
+
+            if (!isItThere) {
+                listy.push({
+                    name: name,
+                    element: element,
+                    planet: planet,
+                    rating: selectedRating
+                });
+            }
+
+            localStorage.setItem("characterList", JSON.stringify(listy));
 
             //reset
             form.reset();
             stars.forEach(s => s.style.color = "#e6e6e6");
             selectedRating = 0;
+
+            displayCharacters();
         });
     </script>
 </body>
